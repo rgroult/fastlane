@@ -15,7 +15,11 @@ module FastlaneCore
     attr_accessor :config_file_name
 
     def self.create(available_options, values)
+      UI.user_error!("values parameter must be a hash") unless values.kind_of?(Hash)
       v = values.dup
+      v.each do |key, val|
+        v[key] = val.dup if val.kind_of?(String) # this is necessary when fetching a value from an environment variable
+      end
 
       if v.kind_of?(Hash) && available_options.kind_of?(Array) # we only want to deal with the new configuration system
         # Now see if --verbose would be a valid input
@@ -47,7 +51,7 @@ module FastlaneCore
       @available_options.each do |item|
         UI.user_error!("available_options parameter must be an array of ConfigItems. Found #{item.class}.") unless item.kind_of? ConfigItem
       end
-      UI.user_error!("values parameter must be a hash") unless @values.kind_of? Hash
+      UI.user_error!("values parameter must be a hash") unless @values.kind_of?(Hash)
     end
 
     def verify_value_exists
@@ -186,7 +190,7 @@ module FastlaneCore
       return value unless ask
 
       # fallback to asking
-      if Helper.is_test? or Helper.is_ci?
+      if Helper.is_test? or !UI.interactive?
         # Since we don't want to be asked on tests, we'll just call the verify block with no value
         # to raise the exception that is shown when the user passes an invalid value
         set(key, '')
@@ -249,7 +253,7 @@ module FastlaneCore
     end
 
     # Aliases `[key]` to `fetch(key)` because Ruby can do it.
-    alias_method :[], :fetch
-    alias_method :[]=, :set
+    alias [] fetch
+    alias []= set
   end
 end

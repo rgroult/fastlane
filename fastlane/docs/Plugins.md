@@ -27,7 +27,7 @@ In general, we might not accept actions that
 - Complex actions, that will require a lot of work to maintain in the future
 - Everything that isn't mobile developer related
 
-## Remote plugins
+## Plugins
 
 `fastlane` is an open platform and we enable every developer to extend it to fit their needs. That's why we built a plugin system that allows you and your company to provide `fastlane` plugins to other `fastlane` users. You have the full power and responsibility of maintaining your plugin and keeping it up to date. This is useful if you maintain your own library or web service, and want to make sure the `fastlane` plugin is always up to date.
 
@@ -127,8 +127,12 @@ All you have to do if you have an exiting gem:
 
 ##### RubyGems
 
-The recommended way to publish your plugin is to publish it on [RubyGems.org](https://rubygems.org). You'll first have to create an account, and then push a new release using
+The recommended way to publish your plugin is to publish it on [RubyGems.org](https://rubygems.org). Follow the steps below to publish your plugin.
 
+1. Create an account at [RubyGems.org](https://rubygems.org)
+2. Publish your plugin to a [GitHub](https://github.com) repo
+3. Update the `fastlane-plugin-[plugin_name].gemspec` file so that the `spec.homepage` points to your github repo.
+4. Publish the first release of your plugin:
 ```sh
 bundle install
 rake install

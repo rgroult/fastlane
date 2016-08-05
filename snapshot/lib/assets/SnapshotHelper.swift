@@ -105,7 +105,7 @@ public class Snapshot: NSObject {
             }
         }
 
-        // more information about this, check out https://github.com/fastlane/snapshot
+        // more information about this, check out https://github.com/fastlane/fastlane/tree/master/snapshot
         print("snapshot: \(name) meta: \(metaInfos)")
 
         sleep(1) // Waiting for the animation to be finished (kind of)
