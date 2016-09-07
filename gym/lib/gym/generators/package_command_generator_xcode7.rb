@@ -25,8 +25,12 @@ module Gym
         options = []
 
         options << "-exportOptionsPlist '#{config_path}'"
-        options << "-archivePath '#{BuildCommandGenerator.archive_path}'"
+        options << "-archivePath #{BuildCommandGenerator.archive_path.shellescape}"
         options << "-exportPath '#{temporary_output_path}'"
+
+        if Gym.config[:toolchain]
+          options << "-toolchain '#{Gym.config[:toolchain]}'"
+        end
 
         options
       end
